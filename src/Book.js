@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 
 class Book extends Component {
   static propTypes = {
-    book: PropTypes.object.isRequired
+    book: PropTypes.object.isRequired,
+    updateBook: PropTypes.func.isRequired
   };
   render() {
-    const book = this.props.book;
+    const { book, updateBook } = this.props;
     return (
       <div className="book">
         <div className="book-top">
@@ -19,7 +20,10 @@ class Book extends Component {
             }}
           />
           <div className="book-shelf-changer">
-            <select defaultValue={book.shelf}>
+            <select
+              defaultValue={book.shelf}
+              onChange={e => updateBook(book, e.target.value)}
+            >
               <option value="none" disabled>
                 Move to...
               </option>
