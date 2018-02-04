@@ -14,14 +14,22 @@ class SearchBooks extends Component {
 
   searchBooks = query => {
     if (query) {
-      BooksAPI.search(query).then(resultBooks => {
-        //Update state only if query for which search was
-        //performed is same as latest query in state
-        if (this.state.query === query) {
-          this.setState({ resultBooks });
-          console.log(this.state.resultBooks);
-        }
-      });
+      BooksAPI.search(query)
+        .then(resultBooks => {
+          //Update state only if query for which search was
+          //performed is same as latest query in state
+          if (this.state.query === query) {
+            this.setState({ resultBooks });
+            console.log(this.state.resultBooks);
+          }
+        })
+        .catch(error => {
+          //Clear resultBooks state only if query for which search was
+          //performed is same as latest query in state
+          if (this.state.query === query) {
+            this.setState({ resultBooks: [] });
+          }
+        });
     } else {
       this.setState({ resultBooks: [] });
     }
