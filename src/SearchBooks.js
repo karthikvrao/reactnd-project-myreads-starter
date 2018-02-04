@@ -29,6 +29,9 @@ class SearchBooks extends Component {
 
   render() {
     console.log("search");
+    const existingBooks = this.props.books;
+    const updateBook = this.props.updateBook;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -54,11 +57,23 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.resultBooks.map(book => (
-              <li key={book.id}>
-                <Book book={book} updateBook={this.props.updateBook} />
-              </li>
-            ))}
+            {this.state.resultBooks.map(book => {
+              const foundBook = existingBooks.find(
+                existingBook => existingBook.id === book.id
+              );
+              let displayBook;
+              if (foundBook) {
+                displayBook = foundBook;
+              } else {
+                displayBook = book;
+                displayBook.shelf = "none";
+              }
+              return (
+                <li key={displayBook.id}>
+                  <Book book={displayBook} updateBook={updateBook} />
+                </li>
+              );
+            })}
           </ol>
         </div>
       </div>
