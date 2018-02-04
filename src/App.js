@@ -23,14 +23,21 @@ class BooksApp extends Component {
         books: prevState.books.filter(book => book.id !== updatedBook.id)
       }));
     } else {
-      this.setState(prevState => ({
-        books: prevState.books.map(book => {
+      let newBook = true;
+      this.setState(prevState => {
+        let books = prevState.books.map(book => {
           if (book.id === updatedBook.id) {
             book.shelf = shelf;
+            newBook = false;
           }
           return book;
-        })
-      }));
+        });
+        if (newBook) {
+          updatedBook.shelf = shelf;
+          books.push(updatedBook);
+        }
+        return { books };
+      });
     }
 
     BooksAPI.update(updatedBook, shelf);
