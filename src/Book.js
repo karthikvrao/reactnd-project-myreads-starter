@@ -29,7 +29,7 @@ class Book extends Component {
                 Move to...
               </option>
               {shelves.map((shelf, index) => (
-                <option value={shelf}>
+                <option key={index} value={shelf}>
                   {shelf === "currentlyReading"
                     ? "Currently Reading"
                     : shelf === "wantToRead" ? "Want to Read" : "Read"}

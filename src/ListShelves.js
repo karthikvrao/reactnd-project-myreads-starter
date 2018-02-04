@@ -11,7 +11,6 @@ class ListShelves extends Component {
   };
   render() {
     const { books, updateBook, shelves } = this.props;
-    console.log(books);
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -29,17 +28,15 @@ class ListShelves extends Component {
                   </h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      {this.props.books
-                        .filter(book => book.shelf === shelf)
-                        .map(book => (
-                          <li key={book.id}>
-                            <Book
-                              book={book}
-                              updateBook={updateBook}
-                              shelves={shelves}
-                            />
-                          </li>
-                        ))}
+                      {books.filter(book => book.shelf === shelf).map(book => (
+                        <li key={book.id}>
+                          <Book
+                            book={book}
+                            updateBook={updateBook}
+                            shelves={shelves}
+                          />
+                        </li>
+                      ))}
                     </ol>
                   </div>
                 </div>

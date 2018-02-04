@@ -26,7 +26,6 @@ class SearchBooks extends Component {
           //performed is same as latest query in state
           if (this.state.query === query) {
             this.setState({ resultBooks });
-            console.log(this.state.resultBooks);
           }
         })
         .catch(error => {
@@ -42,7 +41,6 @@ class SearchBooks extends Component {
   };
 
   render() {
-    console.log("search");
     const existingBooks = this.props.books;
     const updateBook = this.props.updateBook;
     const shelves = this.props.shelves;
