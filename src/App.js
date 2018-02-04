@@ -37,6 +37,7 @@ class BooksApp extends Component {
   };
 
   render() {
+    console.log("app");
     return (
       <div className="app">
         <Route
@@ -49,7 +50,15 @@ class BooksApp extends Component {
             />
           )}
         />
-        <Route path="/search" render={() => <SearchBooks />} />
+        <Route
+          path="/search"
+          render={() => (
+            <SearchBooks
+              books={this.state.books}
+              updateBook={this.updateBook}
+            />
+          )}
+        />
       </div>
     );
   }

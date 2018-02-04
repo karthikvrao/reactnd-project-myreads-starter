@@ -1,8 +1,34 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import * as BooksAPI from "./BooksAPI";
+import Book from "./Book";
 
 class SearchBooks extends Component {
+  state = { query: "", resultBooks: [] };
+
+  updateQuery = event => {
+    const query = event.target.value.trim();
+    this.setState({ query });
+    this.searchBooks(query);
+  };
+
+  searchBooks = query => {
+    if (query) {
+      BooksAPI.search(query).then(resultBooks => {
+        //Update state only if query for which search was
+        //performed is same as latest query in state
+        if (this.state.query === query) {
+          this.setState({ resultBooks });
+          console.log(this.state.resultBooks);
+        }
+      });
+    } else {
+      this.setState({ resultBooks: [] });
+    }
+  };
+
   render() {
+    console.log("search");
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -13,16 +39,27 @@ class SearchBooks extends Component {
             {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
                   You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+                  https://github.com/karthikvrao/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
 
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-            <input type="text" placeholder="Search by title or author" />
+            <input
+              type="text"
+              value={this.state.query}
+              placeholder="Search by title or author"
+              onChange={this.updateQuery}
+            />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <ol className="books-grid">
+            {this.state.resultBooks.map(book => (
+              <li key={book.id}>
+                <Book book={book} updateBook={this.props.updateBook} />
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     );
