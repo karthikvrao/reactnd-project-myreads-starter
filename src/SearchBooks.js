@@ -31,6 +31,7 @@ class SearchBooks extends Component {
     console.log("search");
     const existingBooks = this.props.books;
     const updateBook = this.props.updateBook;
+    const shelves = this.props.shelves;
 
     return (
       <div className="search-books">
@@ -70,7 +71,11 @@ class SearchBooks extends Component {
               }
               return (
                 <li key={displayBook.id}>
-                  <Book book={displayBook} updateBook={updateBook} />
+                  <Book
+                    book={displayBook}
+                    updateBook={updateBook}
+                    shelves={shelves}
+                  />
                 </li>
               );
             })}

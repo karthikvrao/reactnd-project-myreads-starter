@@ -4,7 +4,7 @@ import Book from "./Book";
 
 class ListShelves extends Component {
   render() {
-    const { books, updateBook } = this.props;
+    const { books, updateBook, shelves } = this.props;
     console.log(books);
     return (
       <div className="list-books">
@@ -13,48 +13,32 @@ class ListShelves extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {this.props.books
-                    .filter(book => book.shelf === "currentlyReading")
-                    .map(book => (
-                      <li key={book.id}>
-                        <Book book={book} updateBook={updateBook} />
-                      </li>
-                    ))}
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Want to Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {this.props.books
-                    .filter(book => book.shelf === "wantToRead")
-                    .map(book => (
-                      <li key={book.id}>
-                        <Book book={book} updateBook={updateBook} />
-                      </li>
-                    ))}
-                </ol>
-              </div>
-            </div>
-            <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {this.props.books
-                    .filter(book => book.shelf === "read")
-                    .map(book => (
-                      <li key={book.id}>
-                        <Book book={book} updateBook={updateBook} />
-                      </li>
-                    ))}
-                </ol>
-              </div>
-            </div>
+            {shelves.map((shelf, index) => {
+              return (
+                <div key={index} className="bookshelf">
+                  <h2 className="bookshelf-title">
+                    {shelf === "currentlyReading"
+                      ? "Currently Reading"
+                      : shelf === "wantToRead" ? "Want to Read" : "Read"}
+                  </h2>
+                  <div className="bookshelf-books">
+                    <ol className="books-grid">
+                      {this.props.books
+                        .filter(book => book.shelf === shelf)
+                        .map(book => (
+                          <li key={book.id}>
+                            <Book
+                              book={book}
+                              updateBook={updateBook}
+                              shelves={shelves}
+                            />
+                          </li>
+                        ))}
+                    </ol>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="open-search">

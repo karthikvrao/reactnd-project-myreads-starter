@@ -4,10 +4,11 @@ import PropTypes from "prop-types";
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
-    updateBook: PropTypes.func.isRequired
+    updateBook: PropTypes.func.isRequired,
+    shelves: PropTypes.array.isRequired
   };
   render() {
-    const { book, updateBook } = this.props;
+    const { book, updateBook, shelves } = this.props;
     return (
       <div className="book">
         <div className="book-top">
@@ -27,9 +28,13 @@ class Book extends Component {
               <option value="none" disabled>
                 Move to...
               </option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
+              {shelves.map((shelf, index) => (
+                <option value={shelf}>
+                  {shelf === "currentlyReading"
+                    ? "Currently Reading"
+                    : shelf === "wantToRead" ? "Want to Read" : "Read"}
+                </option>
+              ))}
               <option value="none">None</option>
             </select>
           </div>

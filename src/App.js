@@ -44,7 +44,7 @@ class BooksApp extends Component {
   };
 
   render() {
-    console.log("app");
+    const shelves = ["currentlyReading", "wantToRead", "read"];
     return (
       <div className="app">
         <Route
@@ -54,6 +54,7 @@ class BooksApp extends Component {
             <ListShelves
               books={this.state.books}
               updateBook={this.updateBook}
+              shelves={shelves}
             />
           )}
         />
@@ -63,6 +64,7 @@ class BooksApp extends Component {
             <SearchBooks
               books={this.state.books}
               updateBook={this.updateBook}
+              shelves={shelves}
             />
           )}
         />
